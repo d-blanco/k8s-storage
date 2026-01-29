@@ -1,0 +1,33 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: hello
+spec:
+  template:
+    # This is the pod template
+    spec:
+      containers:
+
+      - name: busywriter # first container
+        image: busybox:1.28
+        command: ['sh', '-c', 'while true; do echo "Hello, Kubernetes! $(date) >> /data/out.txt"; sleep 5; done;']
+        volumeMounts:
+          mountPath: /data
+          name: file-share # both mounted to same volume
+
+      - name: busyreader # second container
+        image: busybox:1.28
+        command: ['sh', '-c', 'while true; do tail -f /read/out.txt || true; sleep 5; done;']
+        volumeMounts:
+          mountPath: /read # local mount location of the volume
+          name: file-share
+
+      restartPolicy: OnFailure
+
+  volumes:
+  - name: file-share # this is the volume
+    emptyDir:
+      sizeLimit: 500Mi
+      medium: Memory
+
+    # The pod template ends here
