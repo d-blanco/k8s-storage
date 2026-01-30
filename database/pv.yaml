@@ -3,6 +3,7 @@ kind: PersistentVolume
 metadata:
   name: mysql-pv
 spec:
+  type: csi
   capacity:
     storage: 1Gi
   volumeMode: Filesystem
