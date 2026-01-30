@@ -6,7 +6,7 @@ metadata:
   labels:
     app: api
 spec:
-  ServiceAccount: s3-sa
+  
   replicas: 3
   selector:
     matchLabels:
@@ -16,6 +16,7 @@ spec:
       labels:
         app: api
     spec:
+      ServiceAccount: s3-sa
       containers:
       - name: api
         env: 
