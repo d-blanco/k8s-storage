@@ -16,7 +16,7 @@ spec:
       labels:
         app: api
     spec:
-      ServiceAccount: s3-sa
+      serviceAccountName: s3-sa
       containers:
       - name: api
         env: 
